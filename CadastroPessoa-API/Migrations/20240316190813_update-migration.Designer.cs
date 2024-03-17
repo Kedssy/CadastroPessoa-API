@@ -4,6 +4,7 @@ using CadastroPessoa_API.DataManager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroPessoa_API.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240316190813_update-migration")]
+    partial class updatemigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,44 +56,6 @@ namespace CadastroPessoa_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pessoas");
-                });
-
-            modelBuilder.Entity("CadastroPessoa_API.Models.Telefone", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NrTelefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PessoaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PessoaId");
-
-                    b.ToTable("Telefone");
-                });
-
-            modelBuilder.Entity("CadastroPessoa_API.Models.Telefone", b =>
-                {
-                    b.HasOne("CadastroPessoa_API.Models.Pessoa", "Pessoa")
-                        .WithMany("Telefones")
-                        .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pessoa");
-                });
-
-            modelBuilder.Entity("CadastroPessoa_API.Models.Pessoa", b =>
-                {
-                    b.Navigation("Telefones");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,20 +1,21 @@
-﻿using CadastroPessoa_API.Models;
+﻿using CadastroPessoa_API.Dtos;
+using CadastroPessoa_API.Models;
 
 namespace CadastroPessoa_API.Services.PessoaService
 {
     public interface IPessoaInterface
     {
-        Task<ServiceResponse<List<Pessoa>>> FindPessoas();
+        Task<ServiceResponse<List<PessoaDto>>> FindPessoas();
 
-        Task<ServiceResponse<List<Pessoa>>> CreatePessoa(Pessoa pessoa);
+        Task<ServiceResponse<PessoaDto>> CreatePessoa(PessoaDto pessoa);
 
-        Task<ServiceResponse<Pessoa>> FindPessoaById(int id);
+        Task<ServiceResponse<PessoaDto>> FindPessoaById(int id);
 
-        Task<ServiceResponse<List<Pessoa>>> UpdatePessoa(Pessoa pessoa);
+        Task<ServiceResponse<PessoaDto>> UpdatePessoa(PessoaDto pessoa);
 
-        Task<ServiceResponse<List<Pessoa>>> DeletePessoa(int id);
+        void DeletePessoa(int id);
 
-        Task<ServiceResponse<List<Pessoa>>> InactivatePessoa(int id);
+        Task<ServiceResponse<PessoaDto>> InactivatePessoa(int id);
 
     }
 }

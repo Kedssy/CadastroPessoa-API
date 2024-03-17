@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿    using System.ComponentModel.DataAnnotations;
 
 namespace CadastroPessoa_API.Models
 {
@@ -16,5 +16,9 @@ namespace CadastroPessoa_API.Models
         public bool Ativo { get; set; }
 
         public DateTime DtRecord { get; set; } = DateTime.Now.ToLocalTime();
+
+        public DateTime DtAlteracao { get; set; }
+
+        public List<Telefone> Telefones { get; set; }
     }
 }
