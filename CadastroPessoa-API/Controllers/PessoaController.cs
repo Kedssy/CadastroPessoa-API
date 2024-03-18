@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroPessoa_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/pessoa")]
     [ApiController]
     public class PessoaController : ControllerBase
     {
@@ -60,6 +60,19 @@ namespace CadastroPessoa_API.Controllers
 
         }
 
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<PessoaDto>>> UpdatePessoa(PessoaDto pessoaDto)
+        {
+            var serviceResponse = await _pessoaInterface.UpdatePessoa(pessoaDto);
+
+            if (!serviceResponse.Sucess)
+            {
+                return BadRequest(new { serviceResponse.Data, serviceResponse.Message, serviceResponse.Sucess });
+            }
+
+            return Ok(serviceResponse);
+        }
+
         [HttpPut("inativaFuncionario")]
         public async Task<ActionResult<ServiceResponse<PessoaDto>>> InactivatePessoa(int id)
         {
@@ -71,6 +84,22 @@ namespace CadastroPessoa_API.Controllers
             }
 
             return Ok(serviceResponse);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<PessoaDto>>> DeletePessoa(int id)
+        {
+
+            var serviceResponse = await _pessoaInterface.DeletePessoa(id);
+
+            if (!serviceResponse.Sucess)
+            {
+                return BadRequest(new { serviceResponse.Data, serviceResponse.Message, serviceResponse.Sucess });
+            }
+
+            return Ok(serviceResponse);
+
+
         }
     }
 }

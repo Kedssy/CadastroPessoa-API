@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CadastroPessoa_API.Dtos
 {
-    public class PessoaDto
+    public class PessoaDto : BaseDto<Pessoa, PessoaDto>
     {
         public int Id { get; set; }
         public string Nome { get; set; }
@@ -14,10 +14,10 @@ namespace CadastroPessoa_API.Dtos
         public DateTime DtAlteracao { get; set; }
         public List<string> Telefones { get; set; }
 
-        internal static PessoaDto? GetInstance(Pessoa entity)
+        public override PessoaDto GetInstance(Pessoa entity)
         {
             PessoaDto dto = new PessoaDto();
-
+            TelefoneDto telefoneDto = new TelefoneDto();
             dto.Id = entity.Id;
             dto.Nome = entity.Nome;
             dto.Cpf = entity.Cpf;
@@ -25,21 +25,21 @@ namespace CadastroPessoa_API.Dtos
             dto.Ativo = entity.Ativo;
             dto.DtRecord = entity.DtRecord;
             dto.DtAlteracao = entity.DtAlteracao;
-
-            if (entity.Telefones.IsNullOrEmpty())
+            if (entity.Telefones != null)
             {
-                //dto.Telefones
+                dto.Telefones = entity.Telefones.Select(t => t.NrTelefone).ToList();
             }
-
-
+            else
+            {
+                dto.Telefones = new List<string>();
+            }
 
             return dto;
         }
 
-        internal static List<PessoaDto?> GetListInstance(List<Pessoa> list)
+        public override List<PessoaDto> GetListInstance(List<Pessoa> list)
         {
             return list.Select(p => GetInstance(p)).ToList();
         }
-
     }
 }

@@ -13,7 +13,7 @@ namespace CadastroPessoa_API.Services.PessoaService
 
         Task<ServiceResponse<PessoaDto>> UpdatePessoa(PessoaDto pessoa);
 
-        void DeletePessoa(int id);
+        Task<ServiceResponse<PessoaDto>> DeletePessoa(int id);
 
         Task<ServiceResponse<PessoaDto>> InactivatePessoa(int id);
 

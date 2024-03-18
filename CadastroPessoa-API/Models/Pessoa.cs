@@ -19,6 +19,6 @@ namespace CadastroPessoa_API.Models
 
         public DateTime DtAlteracao { get; set; }
 
-        public List<Telefone> Telefones { get; set; }
+        public virtual List<Telefone> Telefones { get; set; }
     }
 }
