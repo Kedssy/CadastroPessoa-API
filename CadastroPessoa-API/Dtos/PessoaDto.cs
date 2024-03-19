@@ -1,5 +1,5 @@
 ﻿using CadastroPessoa_API.Models;
-using Microsoft.IdentityModel.Tokens;
+using CadastroPessoa_API.Services.TelefoneService;
 
 namespace CadastroPessoa_API.Dtos
 {
@@ -8,7 +8,7 @@ namespace CadastroPessoa_API.Dtos
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Cpf { get; set; }
-        public DateTime DtNascimento { get; set; }
+        public string DtNascimento { get; set; }
         public bool Ativo { get; set; }
         public DateTime DtRecord { get; set; }
         public DateTime DtAlteracao { get; set; }
@@ -21,7 +21,7 @@ namespace CadastroPessoa_API.Dtos
             dto.Id = entity.Id;
             dto.Nome = entity.Nome;
             dto.Cpf = entity.Cpf;
-            dto.DtNascimento = entity.DtNascimento;
+            dto.DtNascimento = entity.DtNascimento.ToString("dd/MM/yyyy");
             dto.Ativo = entity.Ativo;
             dto.DtRecord = entity.DtRecord;
             dto.DtAlteracao = entity.DtAlteracao;

@@ -10,5 +10,7 @@ namespace CadastroPessoa_API.DataManager
            
         }
         public DbSet<Pessoa> Pessoas { get; set; }
+
+        public DbSet<Telefone> Telefone { get; set; }
     }
 }

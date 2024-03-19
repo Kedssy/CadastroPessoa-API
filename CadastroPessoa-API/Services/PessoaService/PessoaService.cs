@@ -1,9 +1,10 @@
 ﻿using CadastroPessoa_API.DataManager;
 using CadastroPessoa_API.Dtos;
 using CadastroPessoa_API.Models;
+using CadastroPessoa_API.Services.TelefoneService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace CadastroPessoa_API.Services.PessoaService
 {
@@ -25,14 +26,15 @@ namespace CadastroPessoa_API.Services.PessoaService
             {
                 ValidatePessoa(pessoaDto);
 
+                DateTime.TryParseExact(pessoaDto.DtNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dtNascimento);
                 Pessoa pessoa = new Pessoa();
                 pessoa.Nome = pessoaDto.Nome;
                 pessoa.Cpf = pessoaDto.Cpf;
-                pessoa.DtNascimento = pessoaDto.DtNascimento;
+                pessoa.DtNascimento = dtNascimento;
                 pessoa.Ativo = true;
                 pessoa.DtAlteracao = DateTime.Now.ToLocalTime();
-                
 
+                
                 if (pessoaDto.Telefones?.Any() == true)
                 {
                     pessoa.Telefones = pessoaDto.Telefones.Select(t => new Telefone { NrTelefone = t }).ToList();
@@ -67,9 +69,9 @@ namespace CadastroPessoa_API.Services.PessoaService
                 }
 
                 ValidatePessoa(pessoaDto);
-
+                DateTime.TryParseExact(pessoaDto.DtNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dtNascimento);
                 pessoa.Nome = pessoaDto.Nome;
-                pessoa.DtNascimento = pessoaDto.DtNascimento;
+                pessoa.DtNascimento = dtNascimento;
                 pessoa.Cpf = pessoaDto.Cpf;
                 pessoa.DtAlteracao = DateTime.Now.ToLocalTime();
 
@@ -121,7 +123,7 @@ namespace CadastroPessoa_API.Services.PessoaService
             try
             {
                 
-                Pessoa pessoa = _context.Pessoas.FirstOrDefault(p => p.Id == id);
+                Pessoa pessoa = _context.Pessoas.Include(p => p.Telefones).FirstOrDefault(p => p.Id == id);
 
                 if (pessoa == null)
                 {
@@ -146,7 +148,7 @@ namespace CadastroPessoa_API.Services.PessoaService
 
             try
             {
-                serviceResponse.Data = pessoaDto.GetListInstance(_context.Pessoas.ToList());
+                serviceResponse.Data = pessoaDto.GetListInstance(_context.Pessoas.Include(p => p.Telefones).ToList());
 
                 if (serviceResponse.Data.Count == 0) 
                 {
@@ -210,6 +212,14 @@ namespace CadastroPessoa_API.Services.PessoaService
             if (pessoaDto.Telefones.IsNullOrEmpty())
             {
                 throw new ArgumentException("Por favor, informe ao menos um telefone para a pessoa.");
+            }
+
+            if (!string.IsNullOrEmpty(pessoaDto.DtNascimento))
+            {
+                if (!DateTime.TryParseExact(pessoaDto.DtNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dtNascimento))
+                {
+                    throw new ArgumentException("Formato inválido para a data de nascimento. Use o formato DD/MM/YYYY."); 
+                }
             }
         }
 

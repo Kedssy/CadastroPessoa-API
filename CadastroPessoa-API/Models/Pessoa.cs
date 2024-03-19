@@ -1,4 +1,5 @@
 ﻿    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CadastroPessoa_API.Models
 {
@@ -19,6 +20,7 @@ namespace CadastroPessoa_API.Models
 
         public DateTime DtAlteracao { get; set; }
 
-        public virtual List<Telefone> Telefones { get; set; }
+        [InverseProperty("Pessoa")]
+        public List<Telefone> Telefones { get; set; } = new List<Telefone>();
     }
 }

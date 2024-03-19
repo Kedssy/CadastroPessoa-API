@@ -1,7 +1,6 @@
 ﻿using CadastroPessoa_API.Dtos;
 using CadastroPessoa_API.Models;
 using CadastroPessoa_API.Services.PessoaService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroPessoa_API.Controllers

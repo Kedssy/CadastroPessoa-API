@@ -1,5 +1,6 @@
 using CadastroPessoa_API.DataManager;
 using CadastroPessoa_API.Services.PessoaService;
+using CadastroPessoa_API.Services.TelefoneService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPessoaInterface, PessoaService>();
+builder.Services.AddScoped<ITelefoneInterface, TelefoneService>();
 
 builder.Services.AddDbContext<ApplicationDataContext>(options =>
 {

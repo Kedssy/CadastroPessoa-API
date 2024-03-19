@@ -11,6 +11,7 @@ namespace CadastroPessoa_API.Models
 
         public string NrTelefone { get; set; }
 
+        [InverseProperty("Telefones")]
         public Pessoa Pessoa { get; set; }
     }
 }
